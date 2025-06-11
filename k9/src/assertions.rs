@@ -162,7 +162,7 @@ macro_rules! assert_equal {
             }
         }
     }};
-    ($left:expr, $right:expr, $($description:expr),*) => {{
+    ($left:expr, $right:expr, $($description:expr),* $(,)?) => {{
         use $crate::__macros__::colored::*;
         $crate::assertions::initialize_colors();
         let description = format!($( $description ),*);
