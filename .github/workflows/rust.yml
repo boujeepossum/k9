@@ -5,61 +5,40 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-  schedule:
-    - cron: "0 */6 * * *"
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy -- -D warnings
+
   test:
     runs-on: ${{ matrix.os }}
-
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest]
-        rust:
-          - stable
-          - nightly
+        os: [ubuntu-latest, macos-latest]
+        rust: [stable, nightly]
 
     steps:
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
 
-      - name: Update local toolchain
-        run: rustup update
-          
-      - name: rustup install (nightly)
-        if: ${{ matrix.rust == 'nightly' }}
-        run: |
-          rustup install nightly
-          rustup default nightly  
-          rustup component add clippy rustfmt
+      - run: cargo test --verbose
 
-      - name: rustup install (stable)
-        if: ${{ matrix.rust == 'stable' }}
-        run: |
-          rustup install stable
-          rustup default stable  
-          rustup component add clippy rustfmt
-
-      - name: Toolchain info
-        run: |
-          cargo --version --verbose
-          rustc --version
-          cargo clippy --version     
-
-      - name: Run tests
-        run: cargo test --verbose
-
-      - name: Run tests (without default features)
+      - name: Test without default features
         run: cargo test --manifest-path k9/Cargo.toml --no-default-features --verbose
 
-      - name: Run tests for custom_comparison_formatters (nightly only)
+      - name: Test custom_comparison_formatters (nightly)
+        if: matrix.rust == 'nightly'
         run: cargo test --manifest-path k9/Cargo.toml --features custom_comparison_formatters
-        if: ${{ matrix.rust == 'nightly' }}
-
-      - name: Check formatting
-        run: cargo fmt --all -- --check
-
-      - name: Lint
-        run: cargo clippy -- -D warnings
