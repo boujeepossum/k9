@@ -1,68 +1,16 @@
 use crate::string_diff::colored_diff;
 use colored::*;
 
-/// Trait used to turn types into a string we can then diff to show pretty
-/// assertions. This allows customizations for certain types to make the
-/// generated strings more human readable.
 pub trait FormattableForComparison {
     fn format(&self) -> String;
 }
 
-#[cfg(not(feature = "custom_comparison_formatters"))]
-mod specialization {
-    use super::FormattableForComparison;
-    use std::fmt::Debug;
-
-    impl<T> FormattableForComparison for T
-    where
-        T: Debug,
-    {
-        fn format(&self) -> String {
-            format!("{self:#?}")
-        }
-    }
-}
-
-#[cfg(feature = "custom_comparison_formatters")]
-mod specialization {
-    use super::FormattableForComparison;
-    use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
-    use std::fmt::Debug;
-
-    impl<T> FormattableForComparison for T
-    where
-        T: Debug,
-    {
-        default fn format(&self) -> String {
-            format!("{:#?}", self)
-        }
-    }
-
-    /// Specialize for HashMaps if the key is `Ord` - doing a diff with
-    /// sorted keys will highlight only the values that have changed
-    /// rather than showing ordering differences.
-    impl<K, V> FormattableForComparison for &HashMap<K, V>
-    where
-        K: Debug + Ord,
-        V: Debug,
-    {
-        fn format(&self) -> String {
-            let sorted = self.iter().collect::<BTreeMap<_, _>>();
-            format!("{:#?}", sorted)
-        }
-    }
-
-    /// Specialize for HashSets if the key is `Ord` - doing a diff with
-    /// sorted keys will highlight only the values that have changed
-    /// rather than showing ordering differences.
-    impl<T, S> FormattableForComparison for &HashSet<T, S>
-    where
-        T: Debug + Ord,
-    {
-        fn format(&self) -> String {
-            let sorted = self.iter().collect::<BTreeSet<_>>();
-            format!("{:#?}", sorted)
-        }
+impl<T> FormattableForComparison for T
+where
+    T: std::fmt::Debug,
+{
+    fn format(&self) -> String {
+        format!("{self:#?}")
     }
 }
 
