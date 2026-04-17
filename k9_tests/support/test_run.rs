@@ -86,6 +86,12 @@ impl TestRun {
 
         let replaced = finished_regex.replace_all(&replaced, "");
 
+        let thread_id_regex = regex::RegexBuilder::new(r#"thread '([^']+)' \(\d+\) panicked"#)
+            .multi_line(true)
+            .build()?;
+
+        let replaced = thread_id_regex.replace_all(&replaced, "thread '$1' panicked");
+
         Ok(replaced.into())
     }
 }
