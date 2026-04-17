@@ -226,7 +226,7 @@ fn update_inline_snapshots(mut file: SourceFile) -> Result<()> {
     let content = file.content.clone();
 
     let mut updates = file.updates.iter().collect::<Vec<_>>();
-    updates.sort_by(|a, b| a.range.start.line.cmp(&b.range.start.line));
+    updates.sort_by_key(|a| a.range.start.line);
 
     let parts = source_code::split_by_ranges(content, updates.iter().map(|u| &u.range).collect());
 
