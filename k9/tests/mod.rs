@@ -10,10 +10,7 @@ macro_rules! assert_matches_inline_snapshot {
 }
 
 pub fn strip_ansi(s: &str) -> String {
-    String::from_utf8(
-        strip_ansi_escapes::strip(s).expect("Cant strip ANSI escape characters from a string"),
-    )
-    .expect("not a utf8 string")
+    strip_ansi_escapes::strip_str(s).to_string()
 }
 
 pub fn assertion_message(m: Option<k9::assertions::Assertion>) -> String {
