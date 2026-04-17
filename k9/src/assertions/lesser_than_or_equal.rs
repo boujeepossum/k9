@@ -22,8 +22,8 @@ Right value: {right}
                 left_desc = "Left".red(),
                 right_desc = "Right".green(),
                 reason = reason,
-                left = format!("{:#?}", left).red(),
-                right = format!("{:#?}", right).green(),
+                left = format!("{left:#?}").red(),
+                right = format!("{right:#?}").green(),
             ))
         }
     }

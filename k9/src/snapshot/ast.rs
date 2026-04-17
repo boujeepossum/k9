@@ -94,10 +94,9 @@ assert_matches_inline_snapshot!(12345, "12345");
 Given macro call:
 
 ```
-{}
+{macro_code}
 ```
 "#,
-                macro_code,
             )
         }
     } else {

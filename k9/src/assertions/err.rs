@@ -12,7 +12,7 @@ Got: {value}
         ",
             value_desc = "Value".red(),
             type_desc = "Err(E)".green(),
-            value = format!("{:?}", value).red(),
+            value = format!("{value:?}").red(),
         ))
     }
 }

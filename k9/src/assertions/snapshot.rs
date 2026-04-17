@@ -122,7 +122,7 @@ impl SourceFile {
 
     pub fn read(absolute_path: &str) -> Result<String> {
         std::fs::read_to_string(absolute_path)
-            .with_context(|| format!("Can't read source file. File path: {}", absolute_path))
+            .with_context(|| format!("Can't read source file. File path: {absolute_path}"))
     }
 
     pub fn write(&self) {
@@ -248,11 +248,7 @@ fn update_inline_snapshots(mut file: SourceFile) -> Result<()> {
 
                 let literal = make_literal(&update.new_value);
 
-                let update_string = format!(
-                    "{comma_separator}{to_add}",
-                    comma_separator = comma_separator,
-                    to_add = literal
-                );
+                let update_string = format!("{comma_separator}{literal}");
 
                 result.push_str(&update_string);
             }
@@ -275,7 +271,7 @@ fn update_inline_snapshots(mut file: SourceFile) -> Result<()> {
 /// can be either compared to existing snapshot or used as a value to
 /// update snapshots to.
 fn value_to_string<V: Debug>(value: V) -> String {
-    let mut s = format!("{:#?}", value);
+    let mut s = format!("{value:#?}");
 
     // Undebug string newlines.
     // Formatting string as `Debug` escapes all newline characters
@@ -304,7 +300,7 @@ fn value_to_string<V: Debug>(value: V) -> String {
         // to avoid awkward macros like
         //      snapshot!("hello
         // world");
-        s = format!("\n{}\n", s);
+        s = format!("\n{s}\n");
     }
     s
 }
@@ -314,7 +310,7 @@ fn make_literal(s: &str) -> String {
     // wrap the string in "" and use it as a literal
     // Otherwise we'd need to use r#""# literals to avoid crazy escaping rules
     if !s.contains('"') && !s.contains('\'') && !s.contains('\\') {
-        return format!(r#""{}""#, s);
+        return format!(r#""{s}""#);
     }
 
     // Otherwise find the longest string of "##... and generate an appropriate escape sequence.
@@ -327,5 +323,5 @@ fn make_literal(s: &str) -> String {
     }
 
     let esc = "#".repeat(max + 1);
-    format!(r#"r{}"{}"{}"#, esc, s, esc)
+    format!(r#"r{esc}"{s}"{esc}"#)
 }

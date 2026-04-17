@@ -115,8 +115,7 @@ fn remove_overlap(left: &Path, right: &str) -> Result<PathBuf> {
                 }
             }
             _ => anyhow::bail!(format!(
-                "Invalid path component. Expected to only have normals: `{:?}`",
-                r_comp
+                "Invalid path component. Expected to only have normals: `{r_comp:?}`"
             )),
         }
     }

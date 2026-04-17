@@ -73,7 +73,7 @@ fn build_system() -> BuildSystem {
 
 fn is_update_mode() -> bool {
     // If runtime ENV variable is set, it takes precedence
-    std::env::var("K9_UPDATE_SNAPSHOTS").map_or(false, |_| true)
+    std::env::var("K9_UPDATE_SNAPSHOTS").is_ok_and(|_| true)
 }
 
 fn should_force_enable_colors() -> bool {

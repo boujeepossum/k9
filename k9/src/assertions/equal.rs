@@ -18,7 +18,7 @@ mod specialization {
         T: Debug,
     {
         fn format(&self) -> String {
-            format!("{:#?}", self)
+            format!("{self:#?}")
         }
     }
 }

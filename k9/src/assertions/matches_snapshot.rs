@@ -24,7 +24,7 @@ pub fn get_test_name() -> String {
 
 pub fn get_test_snap_path(snapshot_dir: &Path, test_name: &str) -> PathBuf {
     let mut p = snapshot_dir.to_owned();
-    p.push(format!("{}.snap", test_name));
+    p.push(format!("{test_name}.snap"));
     p
 }
 

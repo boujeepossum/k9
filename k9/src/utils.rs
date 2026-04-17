@@ -1,5 +1,5 @@
 pub fn add_linebreaks(s: &str) -> String {
-    format!("\n{}\n", s)
+    format!("\n{s}\n")
 }
 
 pub fn terminal_separator_line() -> String {

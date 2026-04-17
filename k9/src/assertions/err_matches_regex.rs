@@ -12,7 +12,7 @@ pub fn assert_err_matches_regex<A, T: std::fmt::Debug>(
     let regex_desc = "regex".green();
 
     if let Err(err) = result {
-        let s = format!("{:?}", err);
+        let s = format!("{err:?}");
         if !r.is_match(&s) {
             let message = format!(
                 "Expected {result_desc} to be {err_desc} that matches 
