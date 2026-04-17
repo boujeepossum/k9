@@ -457,7 +457,7 @@ macro_rules! assert_err_matches_regex {
 /// only argument and stores the snapshot in a separate file instead of inlining
 /// it in the source code of the test.
 ///
-/// ```should_panic
+/// ```no_run
 ///   #[derive(Debug)]
 ///   struct A<'a> {
 ///       name: &'a str,

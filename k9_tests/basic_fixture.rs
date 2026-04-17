@@ -33,7 +33,7 @@ fn basic_fixture_project() -> Result<()> {
 
     k9_released::snapshot!(
         test_run.stdout_sanitized,
-        r"
+        r#"
 
 running 0 tests
 
@@ -46,6 +46,7 @@ test snapshots_experimental::experimental_snapshot ... FAILED
 failures:
 
 ---- snapshots_experimental::experimental_snapshot stdout ----
+
 thread 'snapshots_experimental::experimental_snapshot' panicked at _tests/snapshots_experimental.rs:16:5:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -82,7 +83,7 @@ failures:
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out
 
 
-"
+"#
     );
 
     let test_run = project

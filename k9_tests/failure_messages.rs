@@ -39,7 +39,7 @@ fn get_error_message(test_name: &str) -> Result<String> {
 fn assert_equals_basic() -> Result<()> {
     k9_released::snapshot!(
         get_error_message("assert_equal_basic")?,
-        r"
+        r#"
 
 running 0 tests
 
@@ -52,6 +52,7 @@ test assert_equal_basic ... FAILED
 failures:
 
 ---- assert_equal_basic stdout ----
+
 thread 'assert_equal_basic' panicked at _tests/mod.rs:5:5:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -76,7 +77,7 @@ failures:
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out
 
 
-"
+"#
     );
     Ok(())
 }
@@ -98,6 +99,7 @@ test assert_equal_multiline_string ... FAILED
 failures:
 
 ---- assert_equal_multiline_string stdout ----
+
 thread 'assert_equal_multiline_string' panicked at _tests/mod.rs:10:5:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -148,6 +150,7 @@ test snapshot_basic ... FAILED
 failures:
 
 ---- snapshot_basic stdout ----
+
 thread 'snapshot_basic' panicked at _tests/mod.rs:15:5:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
